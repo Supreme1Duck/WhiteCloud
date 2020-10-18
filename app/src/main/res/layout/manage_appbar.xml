@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.Toolbar
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="?attr/actionBarSize"
+    android:background="@drawable/gradient_green"
+    android:elevation="10dp"
+    app:title="Management"
+    app:titleTextColor="#fff"
+    android:id="@+id/worker_appbar"
+    android:theme="@style/ThemeOverlay.AppCompat.Dark">
+
+</androidx.appcompat.widget.Toolbar>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/home_fragment"
+        android:title="@string/home"
+        android:icon="@drawable/ic_home"/>
+
+    <item
+        android:id="@+id/list_fragment"
+        android:title="@string/list"
+        android:icon="@drawable/ic_all_inbox"/>
+
+    <item
+        android:id="@+id/other_fragment"
+        android:title="@string/other"
+        android:icon="@drawable/ic_add"/>
+
+</menu>

@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="233dp"
+    android:padding="30dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/worker_cardview"
+        android:layout_width="match_parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:cardCornerRadius="20dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_height="173dp">
+
+        <LinearLayout
+            android:id="@+id/constraint_layout1"
+            android:layout_width="match_parent"
+            android:background="@drawable/gradient_red"
+            android:orientation="vertical"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft = "30dp"
+                android:layout_marginRight = "30dp"
+                android:layout_marginTop = "20dp">
+                    
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/text_name_worker"
+                            android:textSize="24sp"
+                            android:fontFamily="@font/machine_bt"
+                            android:layout_height="wrap_content"
+                            android:layout_width="wrap_content"
+                            android:text="Andrei Utko"
+                            android:textColor="#fff"/>
+
+                        <TextView
+                            android:id="@+id/text_district_worker"
+                            android:textSize="18sp"
+                            android:layout_height="wrap_content"
+                            android:layout_width="wrap_content"
+                            android:text="Current location"
+                            android:textColor="#fff"/>
+
+                    </LinearLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:layout_alignParentRight="true"
+                        android:src="@drawable/ic_baseline_cloud_queue_24"
+                        app:tint="#fff"
+                        android:layout_width="70dp"
+                        android:layout_marginEnd="15dp"
+                        android:layout_height="70dp" />
+
+                </RelativeLayout>
+
+            </LinearLayout>
+            
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginTop="20dp"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/weather_wind"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="40sp"
+                    android:textColor="#90ffffff"
+                    android:text="70"/>
+                    
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_height="wrap_content" >
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/o"
+                            android:textColor="#fff"
+                            android:layout_marginTop="4dp"
+                            android:layout_marginStart="7dp" />
+                        
+                        <ImageView
+                            android:layout_width="25dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/ic_baseline_arrow_right_alt_24"
+                            app:tint="#fff"/>
+
+                    </LinearLayout>
+                
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0 %"
+                    android:textColor="#fff"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginStart="8dp"
+                    android:textSize="14sp"
+                    />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/currentTime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="20sp"
+                        android:layout_marginTop="8dp"
+                        android:textColor="#90ffffff"
+                        android:layout_alignParentEnd="true"
+                        android:text="3:42 PM"/>
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

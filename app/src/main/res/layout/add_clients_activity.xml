@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include layout="@layout/clients_appbar"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_width="match_parent"
+        android:id="@+id/clients_app_bar"/>
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:padding="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:orientation="vertical"
+        android:layout_marginTop="-50dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <EditText
+        android:id="@+id/text_address_add_clietns"
+        android:layout_width="match_parent"
+        android:textSize="20sp"
+        android:drawableStart="@drawable/ic_baseline_edit_location_24"
+        android:drawableTint="@color/colorAmber_900"
+        android:textColorHint="@color/colorAmber_A400"
+        android:hint="@string/address_add_client"
+        android:drawablePadding="10dp"
+        android:backgroundTint="@color/colorAmber_A400"
+        android:layout_height="wrap_content"/>
+
+        <EditText
+            android:id="@+id/text_phone_number_add_clietns"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/colorAmber_A400"
+            android:drawableStart="@drawable/ic_baseline_contact_phone_24"
+            android:drawablePadding="10dp"
+            android:drawableTint="@color/colorAmber_900"
+            android:hint="@string/phone_number"
+            android:textColorHint="@color/colorAmber_A400"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/text_name_add_clietns"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/colorAmber_A400"
+            android:drawableStart="@drawable/ic_baseline_assignment_ind_24"
+            android:drawablePadding="10dp"
+            android:drawableTint="@color/colorAmber_900"
+            android:hint="name"
+            android:textColorHint="@color/colorAmber_A400"
+            android:textSize="20sp" />
+
+        <Spinner
+            android:id="@+id/clients_spinner"
+            android:layout_width="match_parent"
+            android:background="@drawable/style_spinner"
+            android:layout_marginTop="10dp"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+    <include layout="@layout/custom_progress_button"
+        android:id="@+id/btn_add_client"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

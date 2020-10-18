@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">My Application</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="home">Workers</string>
+    <string name="list">Clients</string>
+    <string name="other">Other</string>
+    <string name="Preview">Preview</string>
+    <string name="todo">TODO</string>
+    <string name="tap_to_start">Tap to start</string>
+    <string name="start">Start</string>
+    <string name="please_sing_in">Please sing in</string>
+    <string name="password">password</string>
+    <string name="login">login</string>
+    <string name="sing_in">Sing in</string>
+    <string name="address">Район:</string>
+    <string name="addres_1">Адрес:</string>
+    <string name="o">o</string>
+    <string name="press_start_n_to_manage_the_journey">Press Start \n to manage the journey</string>
+    <string name="phone_number">phone_number : </string>
+    <string name="job_name">Job_name : </string>
+    <string name="number">№ :</string>
+    <string name="workers">Workers</string>
+    <string name="email">Email :</string>
+    <string name="district">district :</string>
+    <string name="address_add_client">address</string>
+    <string name="add">Add</string>
+</resources>

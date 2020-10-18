@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "182058296569",
+    "firebase_url": "https://econav-917ca.firebaseio.com",
+    "project_id": "econav-917ca",
+    "storage_bucket": "econav-917ca.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:182058296569:android:c6d0d942d5eddadac8ae28",
+        "android_client_info": {
+          "package_name": "com.example.myapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "182058296569-29i7mkilv4rleoso533uvv2p4ibtn6tc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBwSaddivzN8aVPw64zVoIvmOxuotCllLo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "182058296569-29i7mkilv4rleoso533uvv2p4ibtn6tc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/bottom_nav"
+    app:startDestination="@id/home_fragment">
+
+    <fragment
+        android:id="@+id/home_fragment"
+        android:name="com.example.myapplication.fragments.home_fragment"
+        android:label="Home"
+        tools:layout="@layout/fragment_home_fragment" >
+        <action
+            android:id="@+id/action_home_fragment_to_list_fragment"
+            app:destination="@id/list_fragment" />
+        <action
+            android:id="@+id/action_home_fragment_to_other_fragment3"
+            app:destination="@id/other_fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/list_fragment"
+        android:name="com.example.myapplication.fragments.list_fragment"
+        android:label="List"
+        tools:layout="@layout/fragment_list_fragment" >
+        <action
+            android:id="@+id/action_list_fragment_to_home_fragment"
+            app:destination="@id/home_fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/other_fragment"
+        android:name="com.example.myapplication.fragments.other_fragment"
+        android:label="Other"
+        tools:layout="@layout/fragment_other_fragment">
+        <action
+            android:id="@+id/action_other_fragment_to_list_fragment2"
+            app:destination="@id/list_fragment" />
+        <action
+            android:id="@+id/action_other_fragment_to_home_fragment2"
+            app:destination="@id/home_fragment" />
+    </fragment>
+</navigation>
