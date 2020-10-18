@@ -14,20 +14,27 @@ import com.example.myapplication.data.ClientsClass
 import com.example.myapplication.data.DistrictClass
 import com.example.myapplication.data.WorkerClass
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.*
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 
 class FirebaseWork {
     var WORKER_KEY : String
     var CLIENT_KEY : String
+    var DISTRICT_KEY : String
     private var mDataBase: DatabaseReference
     private var mClientBase : DatabaseReference
     private var databaseInstance : FirebaseAuth
+    var mDistrictBase : DatabaseReference
 
     init {
         FirebaseDatabase.getInstance().setPersistenceEnabled(true)
          databaseInstance = FirebaseAuth.getInstance()
+         DISTRICT_KEY = "Districts"
          WORKER_KEY = "Worker"
          CLIENT_KEY = "Clients"
+         mDistrictBase = FirebaseDatabase.getInstance().getReference(DISTRICT_KEY)
          mDataBase = FirebaseDatabase.getInstance().getReference(WORKER_KEY)
          mClientBase = FirebaseDatabase.getInstance().getReference(CLIENT_KEY)
     }
@@ -77,7 +84,13 @@ class FirebaseWork {
             }
     }
 
-    fun register(login: String, password: String, activity: AppCompatActivity, context: Context, progressBar : ProgressBar) {
+    fun register(
+        login: String,
+        password: String,
+        activity: AppCompatActivity,
+        context: Context,
+        progressBar: ProgressBar
+    ) {
         progressBar.visibility = View.VISIBLE
         databaseInstance.createUserWithEmailAndPassword(login, password)
             .addOnCompleteListener { task ->
@@ -98,7 +111,7 @@ class FirebaseWork {
     }
 
     fun saveTheWorker(
-        text_email : String,
+        text_email: String,
         text_name: String,
         text_age: String,
         text_district: String,
@@ -121,7 +134,12 @@ class FirebaseWork {
         mDataBase.push().setValue(newWorker)
     }
 
-    fun saveTheClient(text_name: String, text_address: String, text_phone_number : String, text_district: String) {
+    fun saveTheClient(
+        text_name: String,
+        text_address: String,
+        text_phone_number: String,
+        text_district: String
+    ) {
         val id = mClientBase.key
         val name = text_name
         val address = text_address
@@ -139,7 +157,7 @@ class FirebaseWork {
 
     fun signOut(context: Context){
         databaseInstance.signOut()
-        startActivity(context,Intent(context, SingInActivity::class.java), null)
+        startActivity(context, Intent(context, SingInActivity::class.java), null)
     }
 
     fun deleteTheUserAccount(context: Context){
@@ -151,12 +169,8 @@ class FirebaseWork {
             }
     }
 
-    fun saveDistrict(district : String){
+    fun saveDistrict(district: String){
         val districtClass = DistrictClass(district)
-        mClientBase.push().setValue(districtClass)
-    }
-
-    fun deleteTheDistrict(district: String){
-        mClientBase.child(district).removeValue()
+        mDistrictBase.push().setValue(districtClass)
     }
 }

@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.example.myapplication.data.ClientsClass;
 import com.example.myapplication.data.DistrictClass;
 import com.example.myapplication.data.WorkerClass;
+import com.example.myapplication.firebase.FirebaseWork;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -91,7 +92,7 @@ public class Repository2 {
 
     public void loadDistricts(){
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
-        Query query = reference.child("Clients");
+        Query query = reference.child("Districts");
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -114,4 +115,23 @@ public class Repository2 {
         liveData_districts.setValue(districts);
         return liveData_districts;
     }
+
+    public void deleteDistrict(String district){
+        Query districtQuery = FirebaseWork.Companion.getInstance().getMDistrictBase().orderByChild("district").equalTo(district);
+
+        districtQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+            for (DataSnapshot ds : snapshot.getChildren()){
+                ds.getRef().setValue(null);
+            }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
 }

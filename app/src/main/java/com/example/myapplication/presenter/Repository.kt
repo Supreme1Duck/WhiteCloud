@@ -31,10 +31,6 @@ class Repository(private val firebaseWork: FirebaseWork){
         firebaseWork.deleteTheUserAccount(context)
     }
 
-    fun deleteTheDistrict(district: String){
-        firebaseWork.deleteTheDistrict(district)
-    }
-
     fun saveTheDistrict(district: String){
         firebaseWork.saveDistrict(district)
     }

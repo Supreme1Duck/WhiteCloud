@@ -41,7 +41,7 @@ class ClientViewModel(application: Application) : AndroidViewModel(application) 
         }
         if (wht == 2)
         viewModelScope.launch(Dispatchers.IO) {
-            repository.deleteTheDistrict(district)
+            repository2.deleteDistrict(district)
         }
     }
 
