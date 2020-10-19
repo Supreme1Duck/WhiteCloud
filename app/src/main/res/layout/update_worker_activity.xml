@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include
+        android:id="@+id/app_bar"
+        layout="@layout/worker_appbar" />
+
+    <EditText
+        android:id="@+id/text_email_change"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="140dp"
+        android:layout_marginEnd="25dp"
+        android:background="@drawable/custom_input"
+        android:drawableStart="@drawable/ic_email_24"
+        android:drawablePadding="6dp"
+        android:drawableTint="@color/colorRed_A400"
+        android:gravity="center_vertical"
+        android:hint="Email"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <EditText
+        android:id="@+id/text_name_change"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="25dp"
+        android:background="@drawable/custom_input"
+        android:drawableStart="@drawable/ic_baseline_assignment_ind_24"
+        android:drawablePadding="6dp"
+        android:drawableTint="@color/colorRed_A400"
+        android:gravity="center_vertical"
+        android:hint="name"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/text_email_change" />
+
+    <EditText
+        android:id="@+id/text_age_change"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="55dp"
+        android:layout_marginEnd="25dp"
+        android:background="@drawable/custom_input"
+        android:drawableStart="@drawable/ic_baseline_face_24"
+        android:drawablePadding="6dp"
+        android:drawableTint="@color/colorRed_A400"
+        android:gravity="center_vertical"
+        android:hint="age"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="@id/text_name_change" />
+
+    <EditText
+        android:id="@+id/text_district_change"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="55dp"
+        android:layout_marginEnd="25dp"
+        android:background="@drawable/custom_input"
+        android:drawableStart="@drawable/ic_baseline_edit_location_24"
+        android:drawablePadding="6dp"
+        android:drawableTint="@color/colorRed_A400"
+        android:gravity="center_vertical"
+        android:hint="district"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="@id/text_age_change" />
+
+    <EditText
+        android:id="@+id/text_phone_number_change"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@id/text_district_change"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="55dp"
+        android:layout_marginEnd="25dp"
+        android:background="@drawable/custom_input"
+        android:drawableStart="@drawable/ic_baseline_contact_phone_24"
+        android:drawablePadding="6dp"
+        android:drawableTint="@color/colorRed_A400"
+        android:gravity="center_vertical"
+        android:hint="@string/phone_number"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="@id/text_district_change" />
+
+    <EditText
+        android:id="@+id/text_password_change"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@id/text_district_change"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="55dp"
+        android:layout_marginEnd="25dp"
+        android:background="@drawable/custom_input"
+        android:drawableStart="@drawable/ic_baseline_lock_24"
+        android:drawablePadding="6dp"
+        android:drawableTint="@color/colorRed_A400"
+        android:gravity="center_vertical"
+        android:hint="New password"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="@id/text_phone_number_change" />
+
+    <EditText
+        android:id="@+id/text_last_password_change"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@id/text_district_change"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="55dp"
+        android:layout_marginEnd="25dp"
+        android:background="@drawable/custom_input"
+        android:drawableStart="@drawable/ic_baseline_lock_24"
+        android:drawablePadding="6dp"
+        android:drawableTint="@color/colorRed_A400"
+        android:gravity="center_vertical"
+        android:hint="Last password"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="@id/text_password_change" />
+
+    <Button
+        android:id="@+id/btn_udpate_change"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@id/text_phone_number_change"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="25dp"
+        android:background="@drawable/gradient_red_button"
+        android:text="Update"
+        android:textAllCaps="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="50dp"
+        android:gravity="center"
+        android:text="if you will change the email and password the Worker will be re-registered"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/app_bar" />
+
+    <ProgressBar
+        android:id="@+id/progressBar3"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="30dp"
+        android:indeterminateDrawable="@drawable/cpb"
+        android:indeterminateDuration="@integer/config_navAnimTime"
+        android:progressTint="@color/card_color"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/text_password_change" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

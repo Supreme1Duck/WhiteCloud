@@ -2,8 +2,6 @@ package com.example.myapplication.firebase
 
 import android.content.Context
 import android.content.Intent
-import android.view.View
-import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat.startActivity
@@ -14,29 +12,26 @@ import com.example.myapplication.data.ClientsClass
 import com.example.myapplication.data.DistrictClass
 import com.example.myapplication.data.WorkerClass
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.*
 
 class FirebaseWork {
-    var WORKER_KEY : String
-    var CLIENT_KEY : String
-    var DISTRICT_KEY : String
-    private var mDataBase: DatabaseReference
-    private var mClientBase : DatabaseReference
-    private var databaseInstance : FirebaseAuth
-    var mDistrictBase : DatabaseReference
+    var WORKER_KEY: String
+    var CLIENT_KEY: String
+    var DISTRICT_KEY: String
+    private var mWorkerBase: DatabaseReference
+    private var mClientBase: DatabaseReference
+    private var databaseAuth: FirebaseAuth
+    var mDistrictBase: DatabaseReference
 
     init {
         FirebaseDatabase.getInstance().setPersistenceEnabled(true)
-         databaseInstance = FirebaseAuth.getInstance()
-         DISTRICT_KEY = "Districts"
-         WORKER_KEY = "Worker"
-         CLIENT_KEY = "Clients"
-         mDistrictBase = FirebaseDatabase.getInstance().getReference(DISTRICT_KEY)
-         mDataBase = FirebaseDatabase.getInstance().getReference(WORKER_KEY)
-         mClientBase = FirebaseDatabase.getInstance().getReference(CLIENT_KEY)
+        databaseAuth = FirebaseAuth.getInstance()
+        DISTRICT_KEY = "Districts"
+        WORKER_KEY = "Worker"
+        CLIENT_KEY = "Clients"
+        mDistrictBase = FirebaseDatabase.getInstance().getReference(DISTRICT_KEY)
+        mWorkerBase = FirebaseDatabase.getInstance().getReference(WORKER_KEY)
+        mClientBase = FirebaseDatabase.getInstance().getReference(CLIENT_KEY)
     }
 
     companion object {
@@ -55,7 +50,7 @@ class FirebaseWork {
     }
 
     fun singIn(login: String, password: String, activity: AppCompatActivity, context: Context) {
-        databaseInstance.signInWithEmailAndPassword(
+        databaseAuth.signInWithEmailAndPassword(
             login,
             password
         )
@@ -84,17 +79,90 @@ class FirebaseWork {
             }
     }
 
+    fun workerChange(
+        login: String,
+        password: String,
+        lastPassword: String,
+        context: Context,
+        int: Int,
+        name: String,
+        age: String,
+        phoneNumber: String,
+        district: String
+    ) {
+        val adminEmail = databaseAuth.currentUser!!.email
+        databaseAuth.signInWithEmailAndPassword(
+            login,
+            lastPassword
+        )
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    if (login == "andrewduck1365@gmail.com")
+                        Toast.makeText(context, "You are not a Worker", Toast.LENGTH_SHORT).show()
+                    else {
+                        Toast.makeText(context, "Success!", Toast.LENGTH_SHORT).show()
+                        val user = databaseAuth.currentUser
+                        if (int == 1) {
+                            if (login.isNotEmpty())
+                                user!!.updateEmail(login).addOnCompleteListener {
+                                    if (task.isSuccessful) {
+                                        user.updatePassword(password).addOnCompleteListener {
+                                            if (task.isSuccessful) {
+                                                Toast.makeText(context, "Done!", Toast.LENGTH_SHORT)
+                                                    .show()
+                                                val query =
+                                                    mWorkerBase.orderByChild("email").equalTo(login)
+                                                query.addListenerForSingleValueEvent(object :
+                                                    ValueEventListener {
+                                                    override fun onDataChange(snapshot: DataSnapshot) {
+                                                        for (ds in snapshot.children)
+                                                            ds.ref.setValue(null)
+                                                    }
+
+                                                    override fun onCancelled(error: DatabaseError) {
+                                                        TODO("Not yet implemented")
+                                                    }
+                                                })
+
+                                                saveTheWorker(
+                                                    login,
+                                                    name,
+                                                    age,
+                                                    district,
+                                                    phoneNumber
+                                                )
+
+                                                databaseAuth.signOut()
+                                                databaseAuth.signInWithEmailAndPassword(
+                                                    adminEmail!!,
+                                                    "SupremeDuck13"
+                                                )
+                                            }
+                                        }
+                                    }
+                                }
+                        }
+                        if (int == 2) {
+                            user!!.delete()
+                            databaseAuth.signOut()
+                            databaseAuth.signInWithEmailAndPassword(adminEmail!!, "SupremeDuck13")
+                        }
+                    }
+                } else {
+                    Toast.makeText(context, "Something wrong, try again", Toast.LENGTH_SHORT)
+                        .show()
+                }
+            }
+    }
+
     fun register(
         login: String,
         password: String,
         activity: AppCompatActivity,
         context: Context,
-        progressBar: ProgressBar
     ) {
-        progressBar.visibility = View.VISIBLE
-        databaseInstance.createUserWithEmailAndPassword(login, password)
+        databaseAuth.createUserWithEmailAndPassword(login, password)
             .addOnCompleteListener { task ->
-                progressBar.visibility = View.GONE
                 if (task.isSuccessful) {
                     Toast.makeText(context, "Worker created", Toast.LENGTH_SHORT).show()
                     startActivity(context, Intent(activity, MainActivity::class.java), null)
@@ -105,7 +173,7 @@ class FirebaseWork {
     }
 
     fun isLogged(activity: AppCompatActivity, context: Context) {
-        if (databaseInstance.currentUser != null) {
+        if (databaseAuth.currentUser != null) {
             startActivity(context, Intent(activity, MainActivity::class.java), null)
         }
     }
@@ -117,21 +185,16 @@ class FirebaseWork {
         text_district: String,
         text_phoneNumber: String
     ) {
-        val id = mDataBase.key
-        val email = text_email
-        val name = text_name
-        val age = text_age
-        val district = text_district
-        val phoneNumber = text_phoneNumber
+        val id = mWorkerBase.key
         val newWorker = WorkerClass(
-            email,
+            text_email,
             id!!,
-            name,
-            age,
-            district,
-            phoneNumber
+            text_name,
+            text_age,
+            text_district,
+            text_phoneNumber
         )
-        mDataBase.push().setValue(newWorker)
+        mWorkerBase.push().setValue(newWorker)
     }
 
     fun saveTheClient(
@@ -155,21 +218,13 @@ class FirebaseWork {
         mClientChildDatabase.push().setValue(newClient)
     }
 
-    fun signOut(context: Context){
-        databaseInstance.signOut()
+    fun signOut(context: Context) {
+        databaseAuth.signOut()
         startActivity(context, Intent(context, SingInActivity::class.java), null)
     }
 
-    fun deleteTheUserAccount(context: Context){
-        databaseInstance
-            .currentUser!!.
-            delete().
-            addOnCompleteListener {
-                Toast.makeText(context, "The user has been deleted", Toast.LENGTH_SHORT).show()
-            }
-    }
 
-    fun saveDistrict(district: String){
+    fun saveDistrict(district: String) {
         val districtClass = DistrictClass(district)
         mDistrictBase.push().setValue(districtClass)
     }

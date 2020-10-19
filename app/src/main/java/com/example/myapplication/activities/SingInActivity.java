@@ -8,13 +8,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.myapplication.R;
 import com.example.myapplication.fragments.ClientViewModel;
-import com.google.firebase.auth.FirebaseAuth;
 
 public class SingInActivity extends AppCompatActivity implements View.OnClickListener {
     private AnimationDrawable animationDrawable;
@@ -35,10 +35,9 @@ public class SingInActivity extends AppCompatActivity implements View.OnClickLis
         edPassword = findViewById(R.id.ed_password);
         progressBar = findViewById(R.id.progressBar2);
         cViewModel = new ViewModelProvider(this).get(ClientViewModel.class);
-        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+        cViewModel.isLogged(SingInActivity.this, this);
         button_sign = findViewById(R.id.buttonSingIn);
         button_sign.setOnClickListener(this);
-        cViewModel.isLogged(this, getBaseContext());
     }
 
     @Override

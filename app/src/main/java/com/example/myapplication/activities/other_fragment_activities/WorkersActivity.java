@@ -7,9 +7,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
 import com.example.myapplication.R;
 import com.example.myapplication.fragments.ClientViewModel;
 
@@ -40,9 +42,10 @@ public class WorkersActivity extends AppCompatActivity implements View.OnClickLi
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.btn_add){
+            progressBar.setVisibility(View.VISIBLE);
             if (isEmpty()){
                 if (ifSize(ed_phonenumber.getText().toString(), ed_age.getText().toString(), ed_district.getText().toString())) {
-                    clientViewModel.register(ed_email.getText().toString().trim(), ed_password.getText().toString().trim(), this, getBaseContext(), progressBar);
+                    clientViewModel.register(ed_email.getText().toString().trim(), ed_password.getText().toString().trim(), this, getBaseContext());
                     clientViewModel.saveWorker(ed_email.getText().toString().trim(),
                             ed_name.getText().toString().trim(),
                             ed_age.getText().toString().trim(),
@@ -56,6 +59,7 @@ public class WorkersActivity extends AppCompatActivity implements View.OnClickLi
                     progressBar.setVisibility(View.GONE);
                 }else{
                     Toast.makeText(this, "Some fields are too big, or empty", Toast.LENGTH_SHORT).show();
+
                 }
             }
         }
@@ -67,6 +71,7 @@ public class WorkersActivity extends AppCompatActivity implements View.OnClickLi
             return true;
         }
         Toast.makeText(getApplicationContext(), "Empty fields", Toast.LENGTH_SHORT).show();
+        progressBar.setVisibility(View.GONE);
         return false;
     }
 
