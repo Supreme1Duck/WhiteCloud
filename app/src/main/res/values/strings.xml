@@ -11,7 +11,7 @@
     <string name="please_sing_in">Please sing in</string>
     <string name="password">password</string>
     <string name="login">login</string>
-    <string name="sing_in">Sing in</string>
+    <string name="sing_in">Sign in</string>
     <string name="address">Район:</string>
     <string name="addres_1">Адрес:</string>
     <string name="o">o</string>
@@ -24,4 +24,6 @@
     <string name="district">district :</string>
     <string name="address_add_client">address</string>
     <string name="add">Add</string>
+    <string name="access_token">pk.eyJ1IjoiYW5kcmV3ZHVjayIsImEiOiJja2dveWhvYzAwNTF2Mnh0ZG0zeTY0ZDJrIn0.-WM8E3RIsTBzywfykcIXDw</string>
+    <string name="title_activity_maps">Map</string>
 </resources>

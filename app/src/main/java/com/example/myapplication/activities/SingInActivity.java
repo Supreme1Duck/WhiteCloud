@@ -16,6 +16,9 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.myapplication.R;
 import com.example.myapplication.fragments.ClientViewModel;
 
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.schedulers.Schedulers;
+
 public class SingInActivity extends AppCompatActivity implements View.OnClickListener {
     private AnimationDrawable animationDrawable;
     private EditText edLogin, edPassword;
@@ -66,12 +69,16 @@ public class SingInActivity extends AppCompatActivity implements View.OnClickLis
 
     @Override
     public void onClick(View view) {
-        if (view.getId() == R.id.buttonSingIn && isEmpty()){
+        if (view.getId() == R.id.buttonSingIn && isEmpty()) {
             progressBar.setVisibility(View.VISIBLE);
             button_sign.setEnabled(false);
-            cViewModel.singIn(edLogin.getText().toString(), edPassword.getText().toString(), this, getApplicationContext());
-            progressBar.setVisibility(View.GONE);
-            button_sign.setEnabled(true);
+            cViewModel.singIn(edLogin.getText().toString(), edPassword.getText().toString(), this, getApplicationContext())
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(() -> {
+                        progressBar.setVisibility(View.GONE);
+                        button_sign.setEnabled(true);
+                    });
         }
     }
 

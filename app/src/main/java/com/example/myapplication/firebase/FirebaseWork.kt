@@ -13,6 +13,8 @@ import com.example.myapplication.data.DistrictClass
 import com.example.myapplication.data.WorkerClass
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
+import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Single
 
 class FirebaseWork {
     var WORKER_KEY: String
@@ -49,35 +51,50 @@ class FirebaseWork {
         }
     }
 
-    fun singIn(login: String, password: String, activity: AppCompatActivity, context: Context) {
-        databaseAuth.signInWithEmailAndPassword(
-            login,
-            password
-        )
-            .addOnCompleteListener(
-                activity
-            ) { task ->
-                if (task.isSuccessful) {
-                    Toast.makeText(
-                        context,
-                        "Sing in Successfully",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    if (login == "andrewduck1365@gmail.com")
-                        startActivity(context, Intent(activity, MainActivity::class.java), null)
-                    else {
-                        startActivity(
+    fun singIn(
+        login: String,
+        password: String,
+        activity: AppCompatActivity,
+        context: Context
+    ): Completable {
+        return Completable.create {
+            databaseAuth.signInWithEmailAndPassword(
+                login,
+                password
+            )
+                .addOnCompleteListener(
+                    activity
+                ) { task ->
+                    if (task.isSuccessful) {
+                        Toast.makeText(
                             context,
-                            Intent(activity, AssistantActivity::class.java),
-                            null
-                        )
+                            "Sing in Successfully",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        if (login.trim().toLowerCase() == "andrewduck1365@gmail.com") {
+                            val intent = Intent(activity, MainActivity::class.java)
+                            intent.putExtra("Email", login)
+                            startActivity(context, intent, null)
+                            it.onComplete()
+                        } else {
+                            it.onComplete()
+                            val intent = Intent(activity, AssistantActivity::class.java)
+                            intent.putExtra("Email", login)
+                            startActivity(
+                                context,
+                                intent,
+                                null
+                            )
+                        }
+                    } else {
+                        Toast.makeText(context, "Wrong fields", Toast.LENGTH_SHORT)
+                            .show()
+                        it.onComplete()
                     }
-                } else {
-                    Toast.makeText(context, "Wrong fields", Toast.LENGTH_SHORT)
-                        .show()
                 }
-            }
+        }
     }
+
 
     fun workerChange(
         login: String,
@@ -88,71 +105,96 @@ class FirebaseWork {
         name: String,
         age: String,
         phoneNumber: String,
-        district: String
-    ) {
-        val adminEmail = databaseAuth.currentUser!!.email
-        databaseAuth.signInWithEmailAndPassword(
-            login,
-            lastPassword
-        )
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    if (login == "andrewduck1365@gmail.com")
-                        Toast.makeText(context, "You are not a Worker", Toast.LENGTH_SHORT).show()
-                    else {
-                        Toast.makeText(context, "Success!", Toast.LENGTH_SHORT).show()
-                        val user = databaseAuth.currentUser
-                        if (int == 1) {
-                            if (login.isNotEmpty())
-                                user!!.updateEmail(login).addOnCompleteListener {
-                                    if (task.isSuccessful) {
-                                        user.updatePassword(password).addOnCompleteListener {
-                                            if (task.isSuccessful) {
-                                                Toast.makeText(context, "Done!", Toast.LENGTH_SHORT)
-                                                    .show()
-                                                val query =
-                                                    mWorkerBase.orderByChild("email").equalTo(login)
-                                                query.addListenerForSingleValueEvent(object :
-                                                    ValueEventListener {
-                                                    override fun onDataChange(snapshot: DataSnapshot) {
-                                                        for (ds in snapshot.children)
-                                                            ds.ref.setValue(null)
-                                                    }
+        district: String,
+        adminsPassword: String
+    ): Completable {
+        return Completable.create { completable ->
+            val adminEmail = databaseAuth.currentUser!!.email
+            databaseAuth.signInWithEmailAndPassword(
+                login,
+                lastPassword
+            )
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        if (login == "andrewduck1365@gmail.com")
+                            Toast.makeText(context, "You are not a Worker", Toast.LENGTH_SHORT)
+                                .show()
+                        else {
+                            val user = databaseAuth.currentUser
+                            if (int == 1) {
+                                if (login.isNotEmpty())
+                                    user!!.updateEmail(login).addOnCompleteListener {
+                                        if (task.isSuccessful) {
+                                            user.updatePassword(password).addOnCompleteListener {
+                                                if (task.isSuccessful) {
+                                                    Toast.makeText(
+                                                        context,
+                                                        "Done!",
+                                                        Toast.LENGTH_SHORT
+                                                    )
+                                                        .show()
+                                                    val query =
+                                                        mWorkerBase.orderByChild("email")
+                                                            .equalTo(login)
+                                                    query.addListenerForSingleValueEvent(object :
+                                                        ValueEventListener {
+                                                        override fun onDataChange(snapshot: DataSnapshot) {
+                                                            for (ds in snapshot.children)
+                                                                ds.ref.setValue(null)
+                                                        }
 
-                                                    override fun onCancelled(error: DatabaseError) {
-                                                        TODO("Not yet implemented")
-                                                    }
-                                                })
+                                                        override fun onCancelled(error: DatabaseError) {
+                                                            TODO("Not yet implemented")
+                                                        }
+                                                    })
 
-                                                saveTheWorker(
-                                                    login,
-                                                    name,
-                                                    age,
-                                                    district,
-                                                    phoneNumber
-                                                )
-
-                                                databaseAuth.signOut()
-                                                databaseAuth.signInWithEmailAndPassword(
-                                                    adminEmail!!,
-                                                    "SupremeDuck13"
-                                                )
+                                                    saveTheWorker(
+                                                        login,
+                                                        name,
+                                                        age,
+                                                        district,
+                                                        phoneNumber
+                                                    )
+                                                    databaseAuth.signOut()
+                                                    databaseAuth.signInWithEmailAndPassword(
+                                                        adminEmail!!,
+                                                        adminsPassword
+                                                    )
+                                                    completable.onComplete()
+                                                }
                                             }
                                         }
                                     }
-                                }
+                            }
+                            if (int == 2) {
+                                val query = mWorkerBase.orderByChild("email").equalTo(login)
+                                query.addListenerForSingleValueEvent(object :
+                                    ValueEventListener {
+                                    override fun onDataChange(snapshot: DataSnapshot) {
+                                        for (ds in snapshot.children)
+                                            ds.ref.setValue(null)
+                                    }
+
+                                    override fun onCancelled(error: DatabaseError) {
+                                        TODO("Not yet implemented")
+                                    }
+                                })
+                                user!!.delete()
+                                databaseAuth.signOut()
+                                databaseAuth.signInWithEmailAndPassword(
+                                    adminEmail!!,
+                                    adminsPassword
+                                )
+                                completable.onComplete()
+                            }
                         }
-                        if (int == 2) {
-                            user!!.delete()
-                            databaseAuth.signOut()
-                            databaseAuth.signInWithEmailAndPassword(adminEmail!!, "SupremeDuck13")
-                        }
+                    } else {
+                        Toast.makeText(context, "Something wrong, try again", Toast.LENGTH_SHORT)
+                            .show()
+                        completable.onComplete()
                     }
-                } else {
-                    Toast.makeText(context, "Something wrong, try again", Toast.LENGTH_SHORT)
-                        .show()
                 }
-            }
+        }
     }
 
     fun register(
@@ -174,7 +216,10 @@ class FirebaseWork {
 
     fun isLogged(activity: AppCompatActivity, context: Context) {
         if (databaseAuth.currentUser != null) {
-            startActivity(context, Intent(activity, MainActivity::class.java), null)
+            if (databaseAuth.currentUser!!.email == "andrewduck1365@gmail.com")
+                startActivity(context, Intent(activity, MainActivity::class.java), null)
+            else
+                startActivity(context, Intent(activity, AssistantActivity::class.java), null)
         }
     }
 
@@ -184,17 +229,20 @@ class FirebaseWork {
         text_age: String,
         text_district: String,
         text_phoneNumber: String
-    ) {
-        val id = mWorkerBase.key
-        val newWorker = WorkerClass(
-            text_email,
-            id!!,
-            text_name,
-            text_age,
-            text_district,
-            text_phoneNumber
-        )
-        mWorkerBase.push().setValue(newWorker)
+    ): Completable {
+        return Completable.create {
+            val id = mWorkerBase.key
+            val newWorker = WorkerClass(
+                text_email,
+                id!!,
+                text_name,
+                text_age,
+                text_district,
+                text_phoneNumber
+            )
+            mWorkerBase.push().setValue(newWorker)
+            it.onComplete()
+        }
     }
 
     fun saveTheClient(
@@ -228,4 +276,44 @@ class FirebaseWork {
         val districtClass = DistrictClass(district)
         mDistrictBase.push().setValue(districtClass)
     }
+
+    fun getDataForAssistant(email: String, context: Context): Single<WorkerClass?> {
+        var worker: WorkerClass? = null
+        val query = mWorkerBase.orderByChild("email").equalTo(email)
+        return Single.create {
+            query.addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    for (ns in snapshot.children) {
+                        worker = ns.getValue(WorkerClass::class.java)!!
+                        it.onSuccess(worker)
+                    }
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+
+                }
+            })
+        }
+    }
+
+    fun loadClientsForAssistant(district: String): Single<ArrayList<ClientsClass>> {
+        val listClients: ArrayList<ClientsClass> = ArrayList()
+        val query = mClientBase.child(district).orderByChild("district").equalTo(district)
+        return Single.create {
+            query.addListenerForSingleValueEvent(object : ValueEventListener {
+
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    for (ns in snapshot.children) {
+                        listClients.add(ns.getValue(ClientsClass::class.java)!!)
+                    }
+                    it.onSuccess(listClients)
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    it.onSuccess(null)
+                }
+            })
+        }
+    }
+
 }

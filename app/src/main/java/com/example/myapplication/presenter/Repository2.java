@@ -23,16 +23,46 @@ public class Repository2 {
     private MutableLiveData<ArrayList<ClientsClass>> clients_data = new MutableLiveData<>();
     private ArrayList<DistrictClass> districts = new ArrayList<>();
     private MutableLiveData<ArrayList<DistrictClass>> liveData_districts = new MutableLiveData<>();
+    private MutableLiveData<ArrayList<String>> emailsData = new MutableLiveData<>();
+    private ArrayList<String> emails = new ArrayList<>();
 
     private static Repository2 instance;
 
-    public static Repository2 getInstance(){
+    public static Repository2 getInstance() {
         if (instance == null)
             instance = new Repository2();
         return instance;
     }
 
-    public MutableLiveData<ArrayList<WorkerClass>> getData(){
+    public MutableLiveData<ArrayList<String>> getEmails() {
+        loadEmails();
+
+        emailsData.setValue(emails);
+
+        return emailsData;
+    }
+
+    public void loadEmails() {
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+        Query query = reference.child("Worker").orderByChild("Email");
+
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot ns : snapshot.getChildren())
+                    emails.add(ns.getValue().toString());
+                emailsData.postValue(emails);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    public MutableLiveData<ArrayList<WorkerClass>> getData() {
         loadWorkers();
 
         data.setValue(workers);

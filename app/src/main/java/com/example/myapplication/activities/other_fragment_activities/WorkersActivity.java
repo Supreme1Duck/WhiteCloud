@@ -15,10 +15,19 @@ import androidx.appcompat.widget.Toolbar;
 import com.example.myapplication.R;
 import com.example.myapplication.fragments.ClientViewModel;
 
+import java.util.Locale;
+
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.annotations.NonNull;
+import io.reactivex.rxjava3.core.CompletableObserver;
+import io.reactivex.rxjava3.disposables.Disposable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
+
 public class WorkersActivity extends AppCompatActivity implements View.OnClickListener {
     private EditText ed_name, ed_age, ed_district, ed_phonenumber, ed_password, ed_email;
     private ClientViewModel clientViewModel;
     private ProgressBar progressBar;
+    private Button button_add;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -35,22 +44,41 @@ public class WorkersActivity extends AppCompatActivity implements View.OnClickLi
         ed_phonenumber = findViewById(R.id.text_phone_number);
         ed_password = findViewById(R.id.text_password);
         ed_email = findViewById(R.id.text_email);
-        Button button_add = findViewById(R.id.btn_add);
+        button_add = findViewById(R.id.btn_add);
         button_add.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.btn_add){
+            button_add.setEnabled(false);
             progressBar.setVisibility(View.VISIBLE);
             if (isEmpty()){
                 if (ifSize(ed_phonenumber.getText().toString(), ed_age.getText().toString(), ed_district.getText().toString())) {
-                    clientViewModel.register(ed_email.getText().toString().trim(), ed_password.getText().toString().trim(), this, getBaseContext());
-                    clientViewModel.saveWorker(ed_email.getText().toString().trim(),
+                    clientViewModel.register(ed_email.getText().toString().trim().toLowerCase(Locale.getDefault()), ed_password.getText().toString().trim(), this, getBaseContext());
+                    clientViewModel.saveWorker(ed_email.getText().toString().trim().toLowerCase(Locale.getDefault()),
                             ed_name.getText().toString().trim(),
                             ed_age.getText().toString().trim(),
                             ed_district.getText().toString().trim(),
-                            ed_phonenumber.getText().toString().trim());
+                            ed_phonenumber.getText().toString().trim()).subscribeOn(Schedulers.newThread())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(new CompletableObserver() {
+                                @Override
+                                public void onSubscribe(@NonNull Disposable d) {
+
+                                }
+
+                                @Override
+                                public void onComplete() {
+                                    progressBar.setVisibility(View.GONE);
+                                    button_add.setEnabled(true);
+                                }
+
+                                @Override
+                                public void onError(@NonNull Throwable e) {
+
+                                }
+                            });
                     ed_name.setText("");
                     ed_age.setText("");
                     ed_district.setText("");

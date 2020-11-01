@@ -1,6 +1,5 @@
 package com.example.myapplication.activities.other_fragment_activities;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
@@ -9,13 +8,12 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.Observer;
 
 import com.example.myapplication.R;
-import com.example.myapplication.activities.MainActivity;
 import com.example.myapplication.customViews.ProgressButton;
 import com.example.myapplication.data.DistrictClass;
 import com.example.myapplication.fragments.ClientViewModel;
@@ -74,7 +72,6 @@ public class ClientsActivity extends AppCompatActivity implements View.OnClickLi
         button.buttonActivated();
         Handler handler = new Handler();
         handler.postDelayed(() -> { button.buttonFinished(ClientsActivity.this);
-        startActivity(new Intent(this, MainActivity.class));
         }, 1500);
     }
 

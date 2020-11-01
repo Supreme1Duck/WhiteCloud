@@ -1,6 +1,8 @@
 package com.example.myapplication.data;
 
-public class WorkerClass {
+import java.io.Serializable;
+
+public class WorkerClass implements Serializable {
 
     private String email;
     private String id;
@@ -9,8 +11,8 @@ public class WorkerClass {
     private String district;
     private String phoneNumber;
 
-    public WorkerClass(){
-        
+    public WorkerClass() {
+
     }
 
     public WorkerClass(String email1,String id1, String name1, String age1, String district1, String phoneNumber1){

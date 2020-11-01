@@ -1,6 +1,8 @@
 package com.example.myapplication.data;
 
-public class ClientsClass {
+import java.io.Serializable;
+
+public class ClientsClass implements Serializable {
 
     private String id;
     private String name;
@@ -8,7 +10,7 @@ public class ClientsClass {
     private String phoneNumber;
     private String district;
 
-    public ClientsClass(){
+    public ClientsClass() {
 
     }
 

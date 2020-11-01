@@ -2,8 +2,14 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.myapplication">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <!--
+         The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
+         Google Maps Android API v2, but you must specify either coarse or fine
+         location permissions for the "MyLocation" functionality.
+    -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:icon="@drawable/ic_cloud"
@@ -12,49 +18,29 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".activities.MainActivity">
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
 
-        </activity>
-
+        <activity
+            android:name=".MapsActivity"
+            android:label="@string/title_activity_maps" />
+        <activity android:name=".activities.MainActivity" />
         <activity android:name=".activities.SingInActivity">
-
             <intent-filter>
-
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
-
             </intent-filter>
-
         </activity>
-
-        <activity android:name=".activities.AssistantActivity">
-
-        </activity>
-
-        <activity android:name=".animation.motion_activity">
-
-        </activity>
-
-        <activity android:name=".activities.other_fragment_activities.WorkersActivity">
-
-        </activity>
-
-        <activity android:name=".activities.other_fragment_activities.ClientsActivity">
-
-        </activity>
-
-        <activity android:name=".activities.other_fragment_activities.LogOutActivity">
-
-        </activity>
-
-        <activity android:name=".activities.other_fragment_activities.ManageActivity">
-
-        </activity>
-
-        <activity android:name=".activities.other_fragment_activities.UpdateWorker">
-
-        </activity>
-
+        <activity android:name=".activities.AssistantActivity" />
+        <activity android:name=".animation.motion_activity" />
+        <activity android:name=".activities.other_fragment_activities.WorkersActivity" />
+        <activity android:name=".activities.other_fragment_activities.ClientsActivity" />
+        <activity android:name=".activities.other_fragment_activities.LogOutActivity" />
+        <activity android:name=".activities.other_fragment_activities.ManageActivity" />
+        <activity android:name=".activities.other_fragment_activities.UpdateWorker" />
+        <activity android:name=".activities.MapActivity" />
     </application>
 
 </manifest>

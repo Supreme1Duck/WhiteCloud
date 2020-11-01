@@ -16,7 +16,7 @@
         <LinearLayout
             android:id="@+id/constraint_layout1"
             android:layout_width="match_parent"
-            android:background="@drawable/gradient_red"
+            android:background="@drawable/gradient_black"
             android:orientation="vertical"
             android:layout_height="match_parent">
 

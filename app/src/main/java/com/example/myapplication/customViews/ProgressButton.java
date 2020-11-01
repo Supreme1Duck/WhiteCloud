@@ -7,7 +7,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import androidx.cardview.widget.CardView;
+
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.myapplication.R;
@@ -25,17 +25,29 @@ public class ProgressButton {
         textView = view.findViewById(R.id.textview_start);
     }
 
-    public void buttonActivated(){
+    public void buttonActivated() {
         progressBar.setAnimation(fade_in);
         progressBar.setVisibility(View.VISIBLE);
         textView.setAnimation(fade_in);
         textView.setText("Please wait...");
     }
 
-    public void buttonFinished(Context ct){
+    public void buttonFinishedWith(Context ct) {
         progressBar.setVisibility(View.GONE);
         layout.setBackgroundColor(Color.WHITE);
         textView.setTextColor(ct.getResources().getColor(R.color.colorGreen));
         textView.setText("Done");
+    }
+
+    public void buttonFinished(Context ct) {
+        progressBar.setVisibility(View.GONE);
+        layout.setBackgroundColor(Color.WHITE);
+        textView.setTextColor(ct.getResources().getColor(R.color.colorGreen));
+        textView.setText("Done");
+    }
+
+    public void setEnabled(int n) {
+        if (n == 1) layout.setClickable(true);
+        else layout.setClickable(false);
     }
 }
