@@ -59,8 +59,8 @@ public class SingInActivity extends AppCompatActivity implements View.OnClickLis
         }
     }
 
-    private boolean isEmpty(){
-        if (!TextUtils.isEmpty(edLogin.getText().toString()) && !TextUtils.isEmpty(edPassword.getText().toString())){
+    private boolean isEmpty() {
+        if (!TextUtils.isEmpty(edLogin.getText().toString()) && !TextUtils.isEmpty(edPassword.getText().toString())) {
             return true;
         }
         Toast.makeText(getApplicationContext(), "Empty fields", Toast.LENGTH_SHORT).show();

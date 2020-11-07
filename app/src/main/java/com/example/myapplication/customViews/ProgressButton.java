@@ -13,12 +13,12 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import com.example.myapplication.R;
 
 public class ProgressButton {
+    Animation fade_in;
     private ConstraintLayout layout;
     private ProgressBar progressBar;
     private TextView textView;
-    Animation fade_in;
 
-    public ProgressButton(Context ct, View view){
+    public ProgressButton(Context ct, View view) {
         fade_in = AnimationUtils.loadAnimation(ct, R.anim.fade_in);
         layout = view.findViewById(R.id.constraint_layout);
         progressBar = view.findViewById(R.id.progressBar);

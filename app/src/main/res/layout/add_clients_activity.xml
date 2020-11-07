@@ -57,6 +57,32 @@
             android:textColorHint="@color/colorAmber_A400"
             android:textSize="20sp" />
 
+        <EditText
+            android:id="@+id/text_latitude"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/colorAmber_A400"
+            android:drawableStart="@drawable/ic_baseline_edit_location_24"
+            android:drawablePadding="10dp"
+            android:drawableTint="@color/colorAmber_900"
+            android:hint="latitude"
+            android:inputType="numberDecimal"
+            android:textColorHint="@color/colorAmber_A400"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/text_longtitude"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/colorAmber_A400"
+            android:drawableStart="@drawable/ic_baseline_edit_location_24"
+            android:drawablePadding="10dp"
+            android:drawableTint="@color/colorAmber_900"
+            android:hint="longtitude"
+            android:inputType="numberDecimal"
+            android:textColorHint="@color/colorAmber_A400"
+            android:textSize="20sp" />
+
         <Spinner
             android:id="@+id/clients_spinner"
             android:layout_width="match_parent"

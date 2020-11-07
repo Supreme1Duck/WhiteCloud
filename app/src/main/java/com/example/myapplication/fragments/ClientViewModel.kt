@@ -84,7 +84,7 @@ class ClientViewModel(application: Application) : AndroidViewModel(application) 
         activity: AppCompatActivity,
         context: Context,
     ) {
-            repository.register(login, password, activity, context)
+        repository.register(login, password, activity, context)
     }
 
     fun saveWorker(
@@ -97,9 +97,16 @@ class ClientViewModel(application: Application) : AndroidViewModel(application) 
         return repository.saveWorker(email, name, age, district, phoneNumber)
     }
 
-    fun saveTheClient(name: String, address: String, phoneNumber: String, district: String) {
+    fun saveTheClient(
+        name: String,
+        address: String,
+        phoneNumber: String,
+        district: String,
+        latitude: Double,
+        longtitude: Double
+    ) {
         viewModelScope.launch(Dispatchers.IO) {
-            repository.saveClient(name, address, phoneNumber, district)
+            repository.saveClient(name, address, phoneNumber, district, latitude, longtitude)
         }
     }
 

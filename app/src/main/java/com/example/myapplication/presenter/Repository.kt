@@ -37,8 +37,15 @@ class Repository(private val firebaseWork: FirebaseWork) {
         return firebaseWork.saveTheWorker(email, name, age, district, phoneNumber)
     }
 
-    fun saveClient(name: String, address: String, phoneNumber: String, district: String) {
-        firebaseWork.saveTheClient(name, address, phoneNumber, district)
+    fun saveClient(
+        name: String,
+        address: String,
+        phoneNumber: String,
+        district: String,
+        latitude: Double,
+        longtitude: Double
+    ) {
+        firebaseWork.saveTheClient(name, address, phoneNumber, district, latitude, longtitude)
     }
 
 

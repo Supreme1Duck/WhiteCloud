@@ -50,10 +50,10 @@ public class WorkersActivity extends AppCompatActivity implements View.OnClickLi
 
     @Override
     public void onClick(View view) {
-        if (view.getId() == R.id.btn_add){
+        if (view.getId() == R.id.btn_add) {
             button_add.setEnabled(false);
             progressBar.setVisibility(View.VISIBLE);
-            if (isEmpty()){
+            if (isEmpty()) {
                 if (ifSize(ed_phonenumber.getText().toString(), ed_age.getText().toString(), ed_district.getText().toString())) {
                     clientViewModel.register(ed_email.getText().toString().trim().toLowerCase(Locale.getDefault()), ed_password.getText().toString().trim(), this, getBaseContext());
                     clientViewModel.saveWorker(ed_email.getText().toString().trim().toLowerCase(Locale.getDefault()),
@@ -85,7 +85,7 @@ public class WorkersActivity extends AppCompatActivity implements View.OnClickLi
                     ed_phonenumber.setText("");
                     ed_password.setText("");
                     progressBar.setVisibility(View.GONE);
-                }else{
+                } else {
                     Toast.makeText(this, "Some fields are too big, or empty", Toast.LENGTH_SHORT).show();
 
                 }
@@ -93,9 +93,9 @@ public class WorkersActivity extends AppCompatActivity implements View.OnClickLi
         }
     }
 
-    private boolean isEmpty(){
+    private boolean isEmpty() {
         if (!TextUtils.isEmpty(ed_name.getText().toString().trim()) && !TextUtils.isEmpty(ed_password.getText().toString().trim()) && !TextUtils.isEmpty(ed_district.getText().toString().trim())
-                && !TextUtils.isEmpty(ed_phonenumber.getText().toString().trim()) && !TextUtils.isEmpty(ed_age.getText().toString().trim())){
+                && !TextUtils.isEmpty(ed_phonenumber.getText().toString().trim()) && !TextUtils.isEmpty(ed_age.getText().toString().trim())) {
             return true;
         }
         Toast.makeText(getApplicationContext(), "Empty fields", Toast.LENGTH_SHORT).show();
@@ -103,7 +103,7 @@ public class WorkersActivity extends AppCompatActivity implements View.OnClickLi
         return false;
     }
 
-    private boolean ifSize(String s1, String s2, String s3){
+    private boolean ifSize(String s1, String s2, String s3) {
         return s1.length() < 14 && s2.length() < 3 && s3.length() < 17;
     }
 

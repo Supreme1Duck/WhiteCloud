@@ -13,7 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.myapplication.MapsActivity;
+import com.example.myapplication.MapboxMap;
 import com.example.myapplication.R;
 import com.example.myapplication.customViews.ProgressButton;
 import com.example.myapplication.data.ClientsClass;
@@ -40,6 +40,8 @@ public class AssistantActivity extends AppCompatActivity {
     private WorkerClass worker;
     private ProgressButton button;
     private ArrayList<String> list = new ArrayList<>();
+    private ArrayList<Double> list_latitude = new ArrayList<>();
+    private ArrayList<Double> list_longtitude = new ArrayList<>();
     private Handler h;
     private ProgressBar progressBar;
     private ImageView image;
@@ -62,9 +64,16 @@ public class AssistantActivity extends AppCompatActivity {
         completeData();
         h = new Handler(message -> {
             if (message.what == 1) {
-                Intent intent = new Intent(this, MapsActivity.class);
+                Intent intent = new Intent(this, MapboxMap.class);
+                Toast.makeText(this, "Email = " + list.size(), Toast.LENGTH_SHORT).show();
                 intent.putExtra("list", list);
+                intent.putExtra("latitude", list_latitude);
+                intent.putExtra("longitude", list_longtitude);
                 startActivity(intent);
+            }
+            if (message.what == 2) {
+                Toast.makeText(this, "No data, please add", Toast.LENGTH_SHORT).show();
+                button.buttonFinished(this);
             }
             return true;
         });
@@ -76,31 +85,39 @@ public class AssistantActivity extends AppCompatActivity {
     }
 
     private Completable load() {
-        return Completable.create(emitter -> {
-            aViewModel.loadClientsForAssistant(worker.getDistrict())
-                    .subscribeOn(Schedulers.newThread())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new SingleObserver<ArrayList<ClientsClass>>() {
-                        @Override
-                        public void onSubscribe(@NonNull Disposable d) {
+        return Completable.create(emitter ->
+                aViewModel.loadClientsForAssistant(worker.getDistrict())
+                        .subscribeOn(Schedulers.newThread())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new SingleObserver<ArrayList<ClientsClass>>() {
 
-                        }
+                            @Override
+                            public void onSubscribe(@NonNull Disposable d) {
 
-                        @Override
-                        public void onSuccess(@NonNull ArrayList<ClientsClass> clientsClasses) {
-                            list.clear();
-                            for (ClientsClass arr : clientsClasses) {
-                                list.add(arr.getAddress());
                             }
-                            emitter.onComplete();
-                        }
 
-                        @Override
-                        public void onError(@NonNull Throwable e) {
+                            @Override
+                            public void onSuccess(@NonNull ArrayList<ClientsClass> clientsClasses) {
+                                if (clientsClasses.size() == 0) {
+                                    h.sendEmptyMessage(2);
+                                    return;
+                                }
+                                list.clear();
+                                list_latitude.clear();
+                                list_longtitude.clear();
+                                for (ClientsClass arr : clientsClasses) {
+                                    list.add(arr.getAddress());
+                                    list_latitude.add(arr.getLatitude());
+                                    list_longtitude.add(arr.getLongtitude());
+                                }
+                                emitter.onComplete();
+                            }
 
-                        }
-                    });
-        });
+                            @Override
+                            public void onError(@NonNull Throwable e) {
+
+                            }
+                        }));
 
     }
 
@@ -130,10 +147,23 @@ public class AssistantActivity extends AppCompatActivity {
     }
 
     private void onCompleteClientsData() {
-        load().subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread()).subscribe(() -> {
-            Toast.makeText(AssistantActivity.this, "address = " + list.get(1), Toast.LENGTH_SHORT).show();
-            button.buttonFinished(AssistantActivity.this);
-            h.sendEmptyMessage(1);
+        load().subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread()).subscribe(new CompletableObserver() {
+            @Override
+            public void onSubscribe(@NonNull Disposable d) {
+
+            }
+
+            @Override
+            public void onComplete() {
+                Toast.makeText(AssistantActivity.this, "list = " + list.get(0), Toast.LENGTH_SHORT).show();
+                button.buttonFinished(AssistantActivity.this);
+                h.sendEmptyMessage(1);
+            }
+
+            @Override
+            public void onError(@NonNull Throwable e) {
+
+            }
         });
     }
 

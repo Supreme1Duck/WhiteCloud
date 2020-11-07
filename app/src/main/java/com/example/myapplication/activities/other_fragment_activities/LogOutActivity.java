@@ -28,18 +28,18 @@ public class LogOutActivity extends AppCompatActivity {
         bar = findViewById(R.id.progressBar_logout);
         cViewModel = new ViewModelProvider(this).get(ClientViewModel.class);
         btn_logout.setOnClickListener(view -> {
-                dialog = new AlertDialog.Builder(this);
-                dialog.setTitle("Are you sure?");
-                dialog.setMessage("You will be returned back sing in");
-                dialog.setPositiveButton("Yes", (dialogInterface, i) -> {
-                    bar.setVisibility(View.VISIBLE);
-                    cViewModel.logout(LogOutActivity.this);
-                    startActivity(new Intent(LogOutActivity.this, SingInActivity.class));
-                    bar.setVisibility(View.GONE);
-                });
-                dialog.setNegativeButton("No", (dialogInterface, i) -> dialogInterface.dismiss());
-                AlertDialog alertDialog = dialog.create();
-                alertDialog.show();
+            dialog = new AlertDialog.Builder(this);
+            dialog.setTitle("Are you sure?");
+            dialog.setMessage("You will be returned back sing in");
+            dialog.setPositiveButton("Yes", (dialogInterface, i) -> {
+                bar.setVisibility(View.VISIBLE);
+                cViewModel.logout(LogOutActivity.this);
+                startActivity(new Intent(LogOutActivity.this, SingInActivity.class));
+                bar.setVisibility(View.GONE);
+            });
+            dialog.setNegativeButton("No", (dialogInterface, i) -> dialogInterface.dismiss());
+            AlertDialog alertDialog = dialog.create();
+            alertDialog.show();
         });
     }
 }

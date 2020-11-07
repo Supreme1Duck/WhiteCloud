@@ -63,13 +63,13 @@ class ManageActivity : AppCompatActivity() {
             arrayAdapter.notifyDataSetChanged()
         })
 
-        buttonAdd.setOnClickListener{
+        buttonAdd.setOnClickListener {
             Toast.makeText(this, "Done", Toast.LENGTH_SHORT).show()
             if (isEmpty(editDistrict.text.toString())) {
                 cViewModel.updateDistricts(editDistrict.text.toString().trim(), 1)
                 editDistrict.setText("")
                 Toast.makeText(this, "Successfully added", Toast.LENGTH_SHORT).show()
-            }else{
+            } else {
                 Toast.makeText(this@ManageActivity, "Empty fields", Toast.LENGTH_SHORT).show()
             }
         }

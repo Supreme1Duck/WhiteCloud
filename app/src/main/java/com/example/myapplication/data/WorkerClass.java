@@ -15,7 +15,7 @@ public class WorkerClass implements Serializable {
 
     }
 
-    public WorkerClass(String email1,String id1, String name1, String age1, String district1, String phoneNumber1){
+    public WorkerClass(String email1, String id1, String name1, String age1, String district1, String phoneNumber1) {
         email = email1;
         id = id1;
         name = name1;

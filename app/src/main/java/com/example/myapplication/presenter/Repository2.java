@@ -17,6 +17,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 public class Repository2 {
+    private static Repository2 instance;
     private ArrayList<WorkerClass> workers = new ArrayList<>();
     private ArrayList<ClientsClass> clients = new ArrayList<>();
     private MutableLiveData<ArrayList<WorkerClass>> data = new MutableLiveData<>();
@@ -25,8 +26,6 @@ public class Repository2 {
     private MutableLiveData<ArrayList<DistrictClass>> liveData_districts = new MutableLiveData<>();
     private MutableLiveData<ArrayList<String>> emailsData = new MutableLiveData<>();
     private ArrayList<String> emails = new ArrayList<>();
-
-    private static Repository2 instance;
 
     public static Repository2 getInstance() {
         if (instance == null)
@@ -90,7 +89,7 @@ public class Repository2 {
         });
     }
 
-    public MutableLiveData<ArrayList<ClientsClass>> getClients(){
+    public MutableLiveData<ArrayList<ClientsClass>> getClients() {
         loadClients();
 
         clients_data.setValue(clients);
@@ -98,15 +97,15 @@ public class Repository2 {
         return clients_data;
     }
 
-    private void loadClients(){
+    private void loadClients() {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
         Query query = reference.child("Clients");
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 clients.clear();
-                for (DataSnapshot ns : snapshot.getChildren()){
-                    for (DataSnapshot ne : ns.getChildren()){
+                for (DataSnapshot ns : snapshot.getChildren()) {
+                    for (DataSnapshot ne : ns.getChildren()) {
                         clients.add(ne.getValue(ClientsClass.class));
                     }
                 }
@@ -120,14 +119,14 @@ public class Repository2 {
         });
     }
 
-    public void loadDistricts(){
+    public void loadDistricts() {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
         Query query = reference.child("Districts");
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 districts.clear();
-                for (DataSnapshot ds : snapshot.getChildren()){
+                for (DataSnapshot ds : snapshot.getChildren()) {
                     districts.add(ds.getValue(DistrictClass.class));
                 }
                 liveData_districts.postValue(districts);
@@ -146,15 +145,15 @@ public class Repository2 {
         return liveData_districts;
     }
 
-    public void deleteDistrict(String district){
+    public void deleteDistrict(String district) {
         Query districtQuery = FirebaseWork.Companion.getInstance().getMDistrictBase().orderByChild("district").equalTo(district);
 
         districtQuery.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-            for (DataSnapshot ds : snapshot.getChildren()){
-                ds.getRef().setValue(null);
-            }
+                for (DataSnapshot ds : snapshot.getChildren()) {
+                    ds.getRef().setValue(null);
+                }
             }
 
             @Override

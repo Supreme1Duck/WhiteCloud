@@ -16,7 +16,7 @@ import kotlinx.android.synthetic.main.fragment_home_fragment.view.*
 class home_fragment : Fragment() {
 
     private lateinit var workerViewModel: ClientViewModel
-    private lateinit var adapter : WorkersAdapter
+    private lateinit var adapter: WorkersAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

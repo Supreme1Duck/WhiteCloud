@@ -9,8 +9,8 @@ import android.widget.ImageView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.myapplication.activities.MainActivity;
 import com.example.myapplication.R;
+import com.example.myapplication.activities.MainActivity;
 
 public class motion_activity extends AppCompatActivity {
     @SuppressLint("ClickableViewAccessibility")

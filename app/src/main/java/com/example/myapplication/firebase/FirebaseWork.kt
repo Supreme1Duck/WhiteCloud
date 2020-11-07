@@ -249,7 +249,9 @@ class FirebaseWork {
         text_name: String,
         text_address: String,
         text_phone_number: String,
-        text_district: String
+        text_district: String,
+        text_latitude: Double,
+        text_longtitude: Double
     ) {
         val id = mClientBase.key
         val name = text_name
@@ -260,7 +262,9 @@ class FirebaseWork {
             name,
             address,
             text_phone_number,
-            district
+            district,
+            text_latitude,
+            text_longtitude
         )
         val mClientChildDatabase = mClientBase.child(district)
         mClientChildDatabase.push().setValue(newClient)
@@ -298,10 +302,9 @@ class FirebaseWork {
 
     fun loadClientsForAssistant(district: String): Single<ArrayList<ClientsClass>> {
         val listClients: ArrayList<ClientsClass> = ArrayList()
-        val query = mClientBase.child(district).orderByChild("district").equalTo(district)
+        val query = mClientBase.child(district)
         return Single.create {
             query.addListenerForSingleValueEvent(object : ValueEventListener {
-
                 override fun onDataChange(snapshot: DataSnapshot) {
                     for (ns in snapshot.children) {
                         listClients.add(ns.getValue(ClientsClass::class.java)!!)

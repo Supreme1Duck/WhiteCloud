@@ -13,17 +13,20 @@ import com.example.myapplication.activities.other_fragment_activities.UpdateWork
 import com.example.myapplication.data.WorkerClass
 import kotlinx.android.synthetic.main.worker_item_view.view.*
 
-class WorkersAdapter(workerlist : ArrayList<WorkerClass>, context : Context) : RecyclerView.Adapter<WorkersAdapter.WorkerViewHolder>() {
+class WorkersAdapter(workerlist: ArrayList<WorkerClass>, context: Context) :
+    RecyclerView.Adapter<WorkersAdapter.WorkerViewHolder>() {
 
     private var listWorkers = emptyList<WorkerClass>()
-    var mContext : Context = context
+    var mContext: Context = context
 
     init {
         listWorkers = workerlist
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WorkerViewHolder {
-        return WorkerViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.worker_item_view, parent, false))
+        return WorkerViewHolder(
+            LayoutInflater.from(parent.context).inflate(R.layout.worker_item_view, parent, false)
+        )
     }
 
     override fun onBindViewHolder(holder: WorkerViewHolder, position: Int) {
@@ -34,7 +37,7 @@ class WorkersAdapter(workerlist : ArrayList<WorkerClass>, context : Context) : R
         holder.itemView.text_age.text = currentItem.age
         holder.itemView.text_district.text = currentItem.district
         holder.itemView.text_phone_number.text = currentItem.phoneNumber
-        holder.itemView.findViewById<LinearLayout>(R.id.main_linear_layout).setOnClickListener{
+        holder.itemView.findViewById<LinearLayout>(R.id.main_linear_layout).setOnClickListener {
             val intent = Intent(mContext, UpdateWorker::class.java).putExtra("Worker", currentItem)
             startActivity(mContext, Intent(mContext, UpdateWorker::class.java), null)
         }
@@ -44,9 +47,9 @@ class WorkersAdapter(workerlist : ArrayList<WorkerClass>, context : Context) : R
         return listWorkers.size
     }
 
-    inner class WorkerViewHolder(itemview : View) : RecyclerView.ViewHolder(itemview)
+    inner class WorkerViewHolder(itemview: View) : RecyclerView.ViewHolder(itemview)
 
-    fun setData(list: List<WorkerClass>){
+    fun setData(list: List<WorkerClass>) {
         listWorkers = list
         notifyDataSetChanged()
     }
